@@ -19,7 +19,7 @@ body{
   text-transform: uppercase;
   font-weight: 500;
 }
-.box input[type = "text"],.box input[type = "password"]{
+.box input[type = "text"],.box input[type = "password"], .box input[type = "email"], .box input[type = "file"] {
   border:0;
   background: none;
   display: block;

@@ -52,8 +52,15 @@
                     <a href="#" class="flex-c-m trans-04 p-lr-25">
                         Help & FAQs
                     </a>
-                    <a href="#" class="flex-c-m trans-04 p-lr-25" th:text="${user.username}"></a>
-                    <a href="#" class="flex-c-m trans-04 p-lr-25" th:text="${user.language_code}"></a>
+
+                    <a href="#" class="flex-c-m trans-04 p-lr-25">
+                        My Account
+                    </a>
+
+                    <a href="#" class="flex-c-m trans-04 p-lr-25">
+                        EN
+                    </a>
+
                     <a href="#" class="flex-c-m trans-04 p-lr-25">
                         USD
                     </a>
@@ -73,27 +80,19 @@
                 <div class="menu-desktop">
                     <ul class="main-menu">
                         <li class="active-menu">
-                            <a href="/">Home</a>
+                            <a href="#" th:text="#{home}">Home</a>
                         </li>
 
                         <li>
-                            <a href="product.html">Shop</a>
+                            <a href="#" th:text="#{shop}">Shop</a>
                         </li>
 
                         <li class="label1" data-label1="hot">
-                            <a href="shoping-cart.html">Features</a>
+                            <a href="#" th:text="#{features}">Features</a>
                         </li>
 
                         <li>
-                            <a href="blog.html">Blog</a>
-                        </li>
-
-                        <li>
-                            <a href="about.html">About</a>
-                        </li>
-
-                        <li>
-                            <a href="contact.html">Contact</a>
+                            <a href="#" th:text="#{blog}">Blog</a>
                         </li>
                     </ul>
                 </div>
@@ -104,13 +103,11 @@
                         <i class="zmdi zmdi-search"></i>
                     </div>
 
-                    <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart"
-                         data-notify="2">
+                    <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart" data-notify="0">
                         <i class="zmdi zmdi-shopping-cart"></i>
                     </div>
 
-                    <a th:href="@{/product/like}" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti"
-                       th:data-notify="${likeCount}">
+                    <a href="#" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti" data-notify="0">
                         <i class="zmdi zmdi-favorite-outline"></i>
                     </a>
                 </div>
@@ -131,13 +128,11 @@
                 <i class="zmdi zmdi-search"></i>
             </div>
 
-            <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti js-show-cart"
-                 data-notify="2">
+            <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti js-show-cart" data-notify="0">
                 <i class="zmdi zmdi-shopping-cart"></i>
             </div>
 
-            <a href="#" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti"
-               data-notify="0">
+            <a href="#" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti" data-notify="0">
                 <i class="zmdi zmdi-favorite-outline"></i>
             </a>
         </div>
@@ -340,6 +335,10 @@
     </div>
 </div>
 
+<div th:if="${error.main}" class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong th:text="${error.message}"></strong> You should check in on some of those fields below.
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
 
 <!-- Product Detail -->
 <section class="sec-product-detail bg0 p-t-65 p-b-60">

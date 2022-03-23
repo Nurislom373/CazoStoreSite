@@ -54,7 +54,7 @@ public class HomeService implements BaseService {
         RestTemplate template = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json");
-        headers.add("Authorization", "Bearer ".concat(SessionToken.getSession().getAccessToken()));
+//        headers.add("Authorization", "Bearer ".concat(SessionToken.getSession().getAccessToken()));
         HttpEntity<Object> entity = new HttpEntity<>(headers);
         ResponseEntity<String> response = template.exchange(url, HttpMethod.GET, entity, new ParameterizedTypeReference<>() {
         });
@@ -77,7 +77,7 @@ public class HomeService implements BaseService {
         RestTemplate template = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json");
-        headers.add("Authorization", "Bearer ".concat(SessionToken.getSession().getAccessToken()));
+//        headers.add("Authorization", "Bearer ".concat(SessionToken.getSession().getAccessToken()));
         HttpEntity<Object> entity = new HttpEntity<>(headers);
         ResponseEntity<String> response = template.exchange(url, HttpMethod.GET, entity, new ParameterizedTypeReference<>() {
         });
@@ -96,7 +96,7 @@ public class HomeService implements BaseService {
         RestTemplate template = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json");
-        headers.add("Authorization", "Bearer ".concat(SessionToken.getSession().getAccessToken()));
+//        headers.add("Authorization", "Bearer ".concat(SessionToken.getSession().getAccessToken()));
         HttpEntity<Object> entity = new HttpEntity<>(headers);
         ResponseEntity<String> response = template.exchange(url, HttpMethod.GET, entity, new ParameterizedTypeReference<>() {
         });

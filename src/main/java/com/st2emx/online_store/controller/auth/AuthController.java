@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/auth/*")
@@ -19,12 +18,17 @@ public class AuthController extends AbstractController<AuthService> {
 
     @RequestMapping(value = "login", method = RequestMethod.GET)
     public String loginPage() {
-        return "auth/index";
+        return "auth/login";
+    }
+
+    @RequestMapping(value = "register", method = RequestMethod.GET)
+    public String registerPage() {
+        return "auth/register";
     }
 
     @RequestMapping(value = "login", method = RequestMethod.POST)
     public String login(@ModelAttribute LoginDto loginDto) {
         service.login(loginDto);
-        return "redirect:/";
+        return "redirect:/auth";
     }
 }

@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <title>َAnimated Login Form</title>
+    <title>َLogin</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
@@ -12,6 +12,8 @@
     <input type="text" name="username" placeholder="Username">
     <input type="password" name="password" placeholder="Password">
     <input type="submit" name="" value="Login">
+    <h6>You dont have account?</h6>
+    <a th:href="@{/auth/register}">Register</a>
 </form>
 
 </body>
