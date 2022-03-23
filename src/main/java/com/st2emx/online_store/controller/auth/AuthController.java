@@ -2,6 +2,7 @@ package com.st2emx.online_store.controller.auth;
 
 import com.st2emx.online_store.controller.AbstractController;
 import com.st2emx.online_store.dto.auth.LoginDto;
+import com.st2emx.online_store.dto.auth.RegisterDto;
 import com.st2emx.online_store.service.auth.AuthService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -30,5 +31,11 @@ public class AuthController extends AbstractController<AuthService> {
     public String login(@ModelAttribute LoginDto loginDto) {
         service.login(loginDto);
         return "redirect:/auth";
+    }
+
+    @RequestMapping(value = "register", method = RequestMethod.POST)
+    public String register(@ModelAttribute RegisterDto registerDto) {
+        service.register(registerDto);
+        return "redirect:/auth/login";
     }
 }
