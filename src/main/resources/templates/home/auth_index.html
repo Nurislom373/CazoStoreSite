@@ -66,34 +66,26 @@
 
                 <!-- Logo desktop -->
                 <a href="#" class="logo">
-                    <img src="images/icons/logo-01.png" alt="IMG-LOGO">
+                    <img  th:src="@{/images/icons/logo-01.png}" alt="IMG-LOGO">
                 </a>
 
                 <!-- Menu desktop -->
                 <div class="menu-desktop">
                     <ul class="main-menu">
                         <li class="active-menu">
-                            <a href="auth_index.html" th:text="#{home}"></a>
+                            <a href="/" th:text="#{home}"></a>
                         </li>
 
                         <li>
-                            <a href="product.html">Shop</a>
+                            <a href="/shop/">Shop</a>
                         </li>
 
                         <li class="label1" data-label1="hot">
-                            <a href="shoping-cart.html" th:text="#{features}"></a>
+                            <a href="#" th:text="#{features}"></a>
                         </li>
 
                         <li>
-                            <a href="blog.html">Blog</a>
-                        </li>
-
-                        <li>
-                            <a href="about.html">About</a>
-                        </li>
-
-                        <li>
-                            <a href="contact.html">Contact</a>
+                            <a href="#" th:text="#{blog}">Blog</a>
                         </li>
                     </ul>
                 </div>
@@ -205,14 +197,6 @@
 
             <li>
                 <a href="blog.html">Blog</a>
-            </li>
-
-            <li>
-                <a href="about.html">About</a>
-            </li>
-
-            <li>
-                <a href="contact.html">Contact</a>
             </li>
         </ul>
     </div>

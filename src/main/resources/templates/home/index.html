@@ -73,7 +73,7 @@
 
                 <!-- Logo desktop -->
                 <a href="#" class="logo">
-                    <img src="images/icons/logo-01.png" alt="IMG-LOGO">
+                    <img th:src="@{/images/icons/logo-01.png}" alt="IMG-LOGO">
                 </a>
 
                 <!-- Menu desktop -->
@@ -84,7 +84,7 @@
                         </li>
 
                         <li>
-                            <a href="#" th:text="#{shop}">Shop</a>
+                            <a href="/shop/" th:text="#{shop}">Shop</a>
                         </li>
 
                         <li class="label1" data-label1="hot">
