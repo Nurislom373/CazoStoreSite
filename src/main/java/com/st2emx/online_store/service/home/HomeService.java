@@ -8,6 +8,7 @@ import com.st2emx.online_store.dto.category.CategoryDto;
 import com.st2emx.online_store.dto.product.ProductDto;
 import com.st2emx.online_store.dto.product.ProductOnlyDto;
 import com.st2emx.online_store.entity.category.Category;
+import com.st2emx.online_store.entity.color.Color;
 import com.st2emx.online_store.service.BaseService;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
@@ -64,6 +65,24 @@ public class HomeService implements BaseService {
 
         Gson gson = new Gson();
         List<CategoryDto> list = gson.fromJson(response.getBody(), type);
+        return list;
+    }
+
+    public List<Color> getAllColor() {
+        String url = "http://localhost:8080/api/v1/color/list";
+        RestTemplate template = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json");
+//        headers.add("Authorization", "Bearer ".concat(SessionToken.getSession().getAccessToken()));
+        HttpEntity<Object> entity = new HttpEntity<>(headers);
+        ResponseEntity<String> response = template.exchange(url, HttpMethod.GET, entity, new ParameterizedTypeReference<>() {
+        });
+
+        Type type = new TypeToken<List<Color>>() {
+        }.getType();
+
+        Gson gson = new Gson();
+        List<Color> list = gson.fromJson(response.getBody(), type);
         return list;
     }
 

@@ -30,6 +30,7 @@ public class ShopController extends AbstractController<ProductService> {
         modelAndView.setViewName("product/shop");
         modelAndView.addObject("categories", homeService.getAllCategories());
         modelAndView.addObject("products", homeService.homeProcessing());
+        modelAndView.addObject("clrs", homeService.getAllColor());
         return modelAndView;
     }
 
@@ -39,6 +40,7 @@ public class ShopController extends AbstractController<ProductService> {
         modelAndView.setViewName("product/shop");
         modelAndView.addObject("categories", homeService.getAllCategories());
         modelAndView.addObject("products", service.getProductByFilterAndPagination(new FilterDto(filterDto.getSortById(), filterDto.getPriceId(), filterDto.getColorId()), page));
+        modelAndView.addObject("clrs", homeService.getAllColor());
         return modelAndView;
     }
 
