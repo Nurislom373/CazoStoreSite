@@ -25,7 +25,7 @@ import java.util.List;
 public class ProductService implements BaseService {
 
     public ProductFullDto getProductFull(Long id) {
-        String url = "http://localhost:8080/api/v1/product/full/"+id;
+        String url = "http://localhost:8080/api/v1/product/full/" + id;
         RestTemplate template = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json");
@@ -75,26 +75,26 @@ public class ProductService implements BaseService {
     }
 
     public List<ProductDto> getProductByFilterAndPagination(FilterDto filterDto, Integer page) {
-        String url = "http://localhost:8080/api/v1/product";
+        String url = "http://localhost:8080/api/v1/product/filter";
         RestTemplate template = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json");
-        org.springframework.boot.configurationprocessor.json.JSONObject jsonObject = new org.springframework.boot.configurationprocessor.json.JSONObject();
-        try {
-            jsonObject.put("size", 20);
-            jsonObject.put("page", page);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("size", 20);
+        jsonObject.put("page", page);
+        jsonObject.put("sortById", filterDto.getSortById());
+        jsonObject.put("priceId", filterDto.getPriceId());
+        jsonObject.put("colorId", filterDto.getColorId());
         HttpEntity<Object> entity = new HttpEntity<>(jsonObject.toString(), headers);
-        ResponseEntity<String> response = template.exchange(url, HttpMethod.GET, entity, new ParameterizedTypeReference<>() {
+        ResponseEntity<String> response = template.exchange(url, HttpMethod.POST, entity, new ParameterizedTypeReference<>() {
         });
-
         Type type = new TypeToken<List<ProductDto>>() {
         }.getType();
-
         Gson gson = new Gson();
         List<ProductDto> list = gson.fromJson(response.getBody(), type);
         return list;
     }
 }
+
+
+//    ResponseEntity<List> stringResponseEntity = template.postForEntity("", filterDto, List.class);

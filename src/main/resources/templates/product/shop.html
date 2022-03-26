@@ -358,37 +358,36 @@
 
 							<ul>
 								<li class="p-b-6">
-									<a href="#" class="filter-link stext-106 trans-04">
+									<a th:href="@{/shop/setSortBy/0}" class="filter-link stext-106 trans-04 filter-link-active">
 										Default
 									</a>
 								</li>
-
 								<li class="p-b-6">
-									<a href="#" class="filter-link stext-106 trans-04">
+									<a th:href="@{/shop/setSortBy/1}" class="filter-link stext-106 trans-04">
 										Popularity
 									</a>
 								</li>
 
 								<li class="p-b-6">
-									<a href="#" class="filter-link stext-106 trans-04">
+									<a th:href="@{/shop/setSortBy/2}" class="filter-link stext-106 trans-04">
 										Average rating
 									</a>
 								</li>
 
 								<li class="p-b-6">
-									<a href="#" class="filter-link stext-106 trans-04 filter-link-active">
+									<a th:href="@{/shop/setSortBy/3}" class="filter-link stext-106 trans-04">
 										Newness
 									</a>
 								</li>
 
 								<li class="p-b-6">
-									<a href="#" class="filter-link stext-106 trans-04">
+									<a th:href="@{/shop/setSortBy/4}" class="filter-link stext-106 trans-04">
 										Price: Low to High
 									</a>
 								</li>
 
 								<li class="p-b-6">
-									<a href="#" class="filter-link stext-106 trans-04">
+									<a th:href="@{/shop/setSortBy/5}" class="filter-link stext-106 trans-04">
 										Price: High to Low
 									</a>
 								</li>
@@ -402,37 +401,37 @@
 
 							<ul>
 								<li class="p-b-6">
-									<a href="#" class="filter-link stext-106 trans-04 filter-link-active">
+									<a th:href="@{/shop/priceId/0}" class="filter-link stext-106 trans-04 filter-link-active">
 										All
 									</a>
 								</li>
 
 								<li class="p-b-6">
-									<a href="#" class="filter-link stext-106 trans-04">
+									<a th:href="@{/shop/priceId/1}" class="filter-link stext-106 trans-04">
 										$0.00 - $50.00
 									</a>
 								</li>
 
 								<li class="p-b-6">
-									<a href="#" class="filter-link stext-106 trans-04">
+									<a th:href="@{/shop/priceId/2}" class="filter-link stext-106 trans-04">
 										$50.00 - $100.00
 									</a>
 								</li>
 
 								<li class="p-b-6">
-									<a href="#" class="filter-link stext-106 trans-04">
+									<a th:href="@{/shop/priceId/3}" class="filter-link stext-106 trans-04">
 										$100.00 - $150.00
 									</a>
 								</li>
 
 								<li class="p-b-6">
-									<a href="#" class="filter-link stext-106 trans-04">
+									<a th:href="@{/shop/priceId/4}" class="filter-link stext-106 trans-04">
 										$150.00 - $200.00
 									</a>
 								</li>
 
 								<li class="p-b-6">
-									<a href="#" class="filter-link stext-106 trans-04">
+									<a th:href="@{/shop/priceId/5}" class="filter-link stext-106 trans-04">
 										$200.00+
 									</a>
 								</li>
@@ -896,6 +895,37 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 			</div>
 		</div>
 	</div>
+
+	<script>
+		var page = 0;
+		var sortBy = 0;
+		var priceId = 0;
+		var colorId = 0;
+
+		function setFilterSortBy(id) {
+			this.sortBy = id;
+		}
+
+		function setFilterPage(id) {
+			this.page = id;
+		}
+
+		function setFilterPrice(id) {
+			this.priceId = id;
+		}
+
+		function setFilterColorId(id) {
+			this.colorId = id;
+		}
+
+		function requestProductFilter() {
+			const http = new XMLHttpRequest();
+			const url = '/shop/filter?page=' + page + '&sortById=' + sortBy + '&price=' + priceId + '&colorId' + colorId;
+			http.open("GET", url);
+			http.send();
+		}
+
+	</script>
 
 <!--===============================================================================================-->	
 	<script th:src="@{/vendor/jquery/jquery-3.2.1.min.js}"></script>

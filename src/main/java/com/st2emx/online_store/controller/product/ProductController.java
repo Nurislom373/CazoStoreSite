@@ -76,4 +76,6 @@ public class ProductController extends AbstractController<ProductService> {
         modelAndView.setViewName("/product/" + id);
         return modelAndView;
     }
+
+
 }
