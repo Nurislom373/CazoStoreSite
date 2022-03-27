@@ -1,5 +1,6 @@
 package com.st2emx.online_store.entity.product;
 
+import com.st2emx.online_store.dto.AuditableDto;
 import com.st2emx.online_store.entity.base.Auditable;
 import com.st2emx.online_store.entity.category.Category;
 import com.st2emx.online_store.entity.status.Status;
@@ -12,7 +13,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Product extends Auditable {
+public class Product extends AuditableDto {
     private Category category;
     private String name;
     private String description;
