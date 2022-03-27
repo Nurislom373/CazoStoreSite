@@ -5,10 +5,7 @@ import com.st2emx.online_store.dto.shop.FilterDto;
 import com.st2emx.online_store.service.home.HomeService;
 import com.st2emx.online_store.service.product.ProductService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -60,6 +57,15 @@ public class ShopController extends AbstractController<ProductService> {
     public String setColor(@PathVariable Long id) {
         filterDto.setColorId(id);
         return "redirect:/shop/filter";
+    }
+
+    @PostMapping(value = "search")
+    public ModelAndView shopPageBySearch(@RequestParam String word){
+        ModelAndView modelAndView=new ModelAndView();
+        modelAndView.setViewName("product/shop");
+        modelAndView.addObject("categories", homeService.getAllCategories());
+        modelAndView.addObject("products", service. getProductBySearchAndPagination(word,page));
+        return modelAndView;
     }
 
 

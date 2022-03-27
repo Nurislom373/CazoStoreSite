@@ -35,7 +35,7 @@ public class AuthController extends AbstractController<AuthService> {
 
     @RequestMapping(value = "register", method = RequestMethod.POST)
     public String register(@ModelAttribute RegisterDto registerDto) {
-//        service.register(registerDto);
+        service.register(registerDto);
         return "redirect:/auth/login";
     }
 }

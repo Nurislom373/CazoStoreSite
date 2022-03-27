@@ -56,6 +56,7 @@ public class ProductController extends AbstractController<ProductService> {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("user", homeService.getUserById());
         modelAndView.addObject("products", homeService.getAllProductLike());
+        modelAndView.addObject("likeCount", homeService.getLike());
         modelAndView.setViewName("product/like-cart");
         return modelAndView;
     }

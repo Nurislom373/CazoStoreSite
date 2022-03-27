@@ -94,6 +94,25 @@ public class ProductService implements BaseService {
         List<ProductDto> list = gson.fromJson(response.getBody(), type);
         return list;
     }
+
+    public Object getProductBySearchAndPagination(String word, Integer page) {
+        String url = "http://localhost:8080/api/v1/product/search/" + word;
+        RestTemplate template = new RestTemplate();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json");
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("size", 20);
+        jsonObject.put("page", page);
+        HttpEntity<Object> entity = new HttpEntity<>(jsonObject.toString(), headers);
+        ResponseEntity<String> response = template.exchange(url, HttpMethod.GET, entity, new ParameterizedTypeReference<>() {
+        });
+        Type type = new TypeToken<List<ProductDto>>() {
+        }.getType();
+        Gson gson = new Gson();
+        List<ProductDto> list = gson.fromJson(response.getBody(), type);
+        return list;
+    }
 }
 
 
