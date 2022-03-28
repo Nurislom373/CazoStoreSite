@@ -73,7 +73,6 @@ public class AuthService implements BaseService {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.MULTIPART_FORM_DATA);
 //        headers.add("Content-Type", "multipart/form-data; boundary=something");
-////        headers.add("boundary", "something");
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
         body.add("file", new ByteArrayResource(multipartFile.getBytes()));
         HttpEntity<MultiValueMap<String, Object>> entity = new HttpEntity<>(body, headers);
