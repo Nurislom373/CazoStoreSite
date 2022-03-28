@@ -51,6 +51,17 @@ public class ProductController extends AbstractController<ProductService> {
         return "redirect:/";
     }
 
+    @RequestMapping(value = "/like/delete/{id}")
+    public ModelAndView productLikeDelete(@PathVariable Long id) {
+        ModelAndView modelAndView = new ModelAndView();
+        service.productLikeDelete(id);
+        modelAndView.addObject("user", homeService.getUserById());
+        modelAndView.addObject("products", homeService.getAllProductLike());
+        modelAndView.addObject("likeCount", homeService.getLike());
+        modelAndView.setViewName("product/like-cart");
+        return modelAndView;
+    }
+
     @RequestMapping(value = "like")
     public ModelAndView productLikePage() {
         ModelAndView modelAndView = new ModelAndView();

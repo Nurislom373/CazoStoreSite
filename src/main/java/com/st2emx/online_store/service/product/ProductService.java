@@ -57,6 +57,18 @@ public class ProductService implements BaseService {
         return response.getStatusCode().is2xxSuccessful();
     }
 
+    public Boolean productLikeDelete(Long id) {
+        String url = "http://localhost:8080/api/v1/product/like/" + id + "/" + SessionToken.getSession().getUserId();
+        RestTemplate template = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json");
+        headers.add("Authorization", "Bearer ".concat(SessionToken.getSession().getAccessToken()));
+        HttpEntity<Object> entity = new HttpEntity<>( headers);
+        ResponseEntity<String> response = template.exchange(url, HttpMethod.DELETE, entity, new ParameterizedTypeReference<>() {
+        });
+        return response.getStatusCode().is2xxSuccessful();
+    }
+
     public Boolean productCommentCreate(Long id, ProductCommentCreateDto productCommentCreateDto) {
         String url = "http://localhost:8080/api/v1/product/comment/create";
         RestTemplate template = new RestTemplate();

@@ -8,6 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 public class ProductOnlyDto {
+    private Long id;
     private String name;
     private String description;
     private Double price;
