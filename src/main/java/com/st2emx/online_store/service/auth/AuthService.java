@@ -52,18 +52,11 @@ public class AuthService implements BaseService {
         return response.getStatusCode().is2xxSuccessful();
     }
 
-    public Boolean login(LoginDto loginDto) {
-        TokenDto tokenDto = null;
-        try {
-            tokenDto = loginProcessing(loginDto);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        if (Objects.nonNull(tokenDto)) {
-            SessionToken.setSession(tokenDto);
-            return true;
-        }
-        return false;
+    @SneakyThrows
+    public TokenDto login(LoginDto loginDto) {
+        TokenDto tokenDto = loginProcessing(loginDto);
+        SessionToken.setSession(tokenDto);
+        return tokenDto;
     }
 
     @SneakyThrows

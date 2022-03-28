@@ -7,7 +7,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
 import java.util.Objects;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("")
@@ -27,9 +31,10 @@ public class HomeController extends AbstractController<HomeService> {
     }
 
     @RequestMapping(value = "/auth")
-    public ModelAndView authHomePage() {
+    public ModelAndView authHomePage(HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("user", service.getUserById());
+        Optional<String> any = Arrays.stream(request.getCookies()).filter(cookie -> "userId".equals(cookie.getName())).map(Cookie::getValue).findAny();
+        modelAndView.addObject("user", service.getUserById(Long.parseLong(any.get())));
         modelAndView.addObject("products", service.homeProcessing());
         modelAndView.addObject("categories", service.getAllCategories());
         modelAndView.addObject("likeCount", service.getLike());

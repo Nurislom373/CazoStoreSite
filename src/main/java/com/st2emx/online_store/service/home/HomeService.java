@@ -110,8 +110,8 @@ public class HomeService implements BaseService {
         return list;
     }
 
-    public UserDto getUserById() {
-        String url = "http://localhost:8080/api/v1/auth/" + SessionToken.getSession().getUserId();
+    public UserDto getUserById(Long userId) {
+        String url = "http://localhost:8080/api/v1/auth/" + userId;
         RestTemplate template = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json");

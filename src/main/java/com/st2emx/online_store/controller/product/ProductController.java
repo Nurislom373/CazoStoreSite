@@ -16,7 +16,11 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
 import java.util.Objects;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/product/*")
@@ -30,15 +34,16 @@ public class ProductController extends AbstractController<ProductService> {
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
-    public ModelAndView getProduct(@PathVariable Long id) {
+    public ModelAndView getProduct(@PathVariable Long id, HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView();
         if (Objects.isNull(SessionToken.getSession())) {
             modelAndView.setViewName("product/product-detail");
             modelAndView.addObject("product", service.getProductFull(id));
         } else {
             modelAndView.setViewName("product/auth_product-detail");
+            Optional<String> any = Arrays.stream(request.getCookies()).filter(cookie -> "userId".equals(cookie.getName())).map(Cookie::getValue).findAny();
             modelAndView.addObject("product", service.getProductFull(id));
-            modelAndView.addObject("user", homeService.getUserById());
+            modelAndView.addObject("user", homeService.getUserById(Long.parseLong(any.get())));
             modelAndView.addObject("likeCount", homeService.getLike());
         }
         modelAndView.addObject("error", new FlashDto());
@@ -52,10 +57,11 @@ public class ProductController extends AbstractController<ProductService> {
     }
 
     @RequestMapping(value = "/like/delete/{id}")
-    public ModelAndView productLikeDelete(@PathVariable Long id) {
+    public ModelAndView productLikeDelete(@PathVariable Long id, HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView();
         service.productLikeDelete(id);
-        modelAndView.addObject("user", homeService.getUserById());
+        Optional<String> any = Arrays.stream(request.getCookies()).filter(cookie -> "userId".equals(cookie.getName())).map(Cookie::getValue).findAny();
+        modelAndView.addObject("user", homeService.getUserById(Long.parseLong(any.get())));
         modelAndView.addObject("products", homeService.getAllProductLike());
         modelAndView.addObject("likeCount", homeService.getLike());
         modelAndView.setViewName("product/like-cart");
@@ -63,9 +69,10 @@ public class ProductController extends AbstractController<ProductService> {
     }
 
     @RequestMapping(value = "like")
-    public ModelAndView productLikePage() {
+    public ModelAndView productLikePage(HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("user", homeService.getUserById());
+        Optional<String> any = Arrays.stream(request.getCookies()).filter(cookie -> "userId".equals(cookie.getName())).map(Cookie::getValue).findAny();
+        modelAndView.addObject("user", homeService.getUserById(Long.parseLong(any.get())));
         modelAndView.addObject("products", homeService.getAllProductLike());
         modelAndView.addObject("likeCount", homeService.getLike());
         modelAndView.setViewName("product/like-cart");

@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+
 @Controller
 @RequestMapping("/auth/*")
 public class AuthController extends AbstractController<AuthService> {
@@ -28,8 +31,14 @@ public class AuthController extends AbstractController<AuthService> {
     }
 
     @RequestMapping(value = "login", method = RequestMethod.POST)
-    public String login(@ModelAttribute LoginDto loginDto) {
-        service.login(loginDto);
+    public String login(@ModelAttribute LoginDto loginDto, HttpServletResponse response) {
+        Long userId = service.login(loginDto).getUserId();
+        Cookie cookie = new Cookie("userId", String.valueOf(userId));
+        cookie.setMaxAge(7 * 24 * 60 * 60);
+        cookie.setSecure(true);
+        cookie.setHttpOnly(true);
+        cookie.setPath("/");
+        response.addCookie(cookie);
         return "redirect:/auth";
     }
 

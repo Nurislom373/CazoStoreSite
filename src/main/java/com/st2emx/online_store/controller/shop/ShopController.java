@@ -9,7 +9,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
 import java.util.Objects;
+import java.util.Optional;
 
 @Controller
 @RequestMapping(value = "/shop/*")
@@ -25,7 +29,7 @@ public class ShopController extends AbstractController<ProductService> {
     }
 
     @RequestMapping(value = "/")
-    public ModelAndView shopPage(@ModelAttribute FilterDto filterDto) {
+    public ModelAndView shopPage(@ModelAttribute FilterDto filterDto, HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView();
         if (Objects.isNull(SessionToken.getSession())) {
             modelAndView.setViewName("product/shop");
@@ -34,17 +38,18 @@ public class ShopController extends AbstractController<ProductService> {
             modelAndView.addObject("clrs", homeService.getAllColor());
         } else {
             modelAndView.setViewName("product/auth_shop");
+            Optional<String> any = Arrays.stream(request.getCookies()).filter(cookie -> "userId".equals(cookie.getName())).map(Cookie::getValue).findAny();
             modelAndView.addObject("categories", homeService.getAllCategories());
             modelAndView.addObject("products", homeService.homeProcessing());
             modelAndView.addObject("clrs", homeService.getAllColor());
-            modelAndView.addObject("user", homeService.getUserById());
+            modelAndView.addObject("user", homeService.getUserById(Long.parseLong(any.get())));
             modelAndView.addObject("likeCount", homeService.getLike());
         }
         return modelAndView;
     }
 
     @RequestMapping(value = "filter")
-    public ModelAndView filter() {
+    public ModelAndView filter(HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView();
         if (Objects.isNull(SessionToken.getSession())) {
             modelAndView.setViewName("product/shop");
@@ -53,7 +58,8 @@ public class ShopController extends AbstractController<ProductService> {
             modelAndView.addObject("clrs", homeService.getAllColor());
         } else {
             modelAndView.setViewName("product/auth_shop");
-            modelAndView.addObject("user", homeService.getUserById());
+            Optional<String> any = Arrays.stream(request.getCookies()).filter(cookie -> "userId".equals(cookie.getName())).map(Cookie::getValue).findAny();
+            modelAndView.addObject("user", homeService.getUserById(Long.parseLong(any.get())));
             modelAndView.addObject("likeCount", homeService.getLike());
             modelAndView.addObject("categories", homeService.getAllCategories());
             modelAndView.addObject("products", service.getProductByFilterAndPagination(new FilterDto(filterDto.getSortById(), filterDto.getPriceId(), filterDto.getColorId()), page));
@@ -81,7 +87,7 @@ public class ShopController extends AbstractController<ProductService> {
     }
 
     @PostMapping(value = "search")
-    public ModelAndView shopPageBySearch(@RequestParam String word){
+    public ModelAndView shopPageBySearch(@RequestParam String word, HttpServletRequest request){
         ModelAndView modelAndView=new ModelAndView();
         if (Objects.isNull(SessionToken.getSession())) {
             modelAndView.setViewName("product/shop");
@@ -89,9 +95,10 @@ public class ShopController extends AbstractController<ProductService> {
             modelAndView.addObject("products", service. getProductBySearchAndPagination(word,page));
         } else {
             modelAndView.setViewName("product/auth_shop");
+            Optional<String> any = Arrays.stream(request.getCookies()).filter(cookie -> "userId".equals(cookie.getName())).map(Cookie::getValue).findAny();
             modelAndView.addObject("categories", homeService.getAllCategories());
             modelAndView.addObject("products", service. getProductBySearchAndPagination(word,page));
-            modelAndView.addObject("user", homeService.getUserById());
+            modelAndView.addObject("user", homeService.getUserById(Long.parseLong(any.get())));
             modelAndView.addObject("likeCount", homeService.getLike());
         }
         return modelAndView;

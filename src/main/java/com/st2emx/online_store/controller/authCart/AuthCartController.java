@@ -11,6 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
+import java.util.Optional;
+
 @Controller
 @RequestMapping("/cart/*")
 public class AuthCartController extends AbstractController<AuthCartService> {
@@ -29,10 +34,11 @@ public class AuthCartController extends AbstractController<AuthCartService> {
     }
 
     @RequestMapping(value = "carts",method = RequestMethod.GET)
-    public ModelAndView getAll() {
+    public ModelAndView getAll(HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView();
+        Optional<String> any = Arrays.stream(request.getCookies()).filter(cookie -> "userId".equals(cookie.getName())).map(Cookie::getValue).findAny();
         modelAndView.addObject("carts",service.getCards());
-        modelAndView.addObject("user", homeService.getUserById());
+        modelAndView.addObject("user", homeService.getUserById(Long.parseLong(any.get())));
         modelAndView.addObject("likeCount", homeService.getLike());
         modelAndView.setViewName("product/your-cart");
         return modelAndView;
