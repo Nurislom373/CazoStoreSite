@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Category Create</title>
+  <title>Category Update</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -380,7 +380,8 @@
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#category-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-layout-text-window-reverse"></i><span>Categories</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="bi bi-layout-text-window-reverse"></i><span>Categories</span><i
+                class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="category-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
@@ -506,7 +507,7 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Category Create</h1>
+      <h1>Category Update</h1>
     </div><!-- End Page Title -->
 
     <section class="section">
@@ -514,13 +515,13 @@
         <div class="col-lg-12">
           <div class="card">
             <div class="card-body">
-              <form method="post" th:action="@{/admin/category/create}">
+              <form method="post" th:action="@{/admin/color/update/{id}(id=${color.id})}">
                 <div class="mb-3 mt-3">
-                  <label class="form-label">Category Name</label>
-                  <input type="text" class="form-control" name="name">
-                  <div class="form-text">Category Name must be more than 3 letters!</div>
+                  <label class="form-label">Color Update Name</label>
+                  <input type="text" class="form-control" name="name" th:value="${color.name}">
+                  <div class="form-text">Color Name must be more than 3 letters!</div>
                 </div>
-                <button type="submit" class="btn btn-primary">Create</button>
+                <button type="submit" class="btn btn-primary">Update</button>
               </form>
             </div>
           </div>

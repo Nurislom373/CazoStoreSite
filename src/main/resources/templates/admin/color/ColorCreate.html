@@ -393,6 +393,16 @@
               <i class="bi bi-circle"></i><span>Category Create</span>
             </a>
           </li>
+          <li>
+            <a th:href="@{/admin/category/update}">
+              <i class="bi bi-circle"></i><span>Category Update</span>
+            </a>
+          </li>
+          <li>
+            <a th:href="@{/admin/category/delete}">
+              <i class="bi bi-circle"></i><span>Category Delete</span>
+            </a>
+          </li>
         </ul>
       </li><!-- End Category Nav -->
 
@@ -417,17 +427,16 @@
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#color-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-layout-text-window-reverse"></i><span>Colors</span><i
-                class="bi bi-chevron-down ms-auto"></i>
+          <i class="bi bi-layout-text-window-reverse"></i><span>Colors</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="color-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a th:href="@{/admin/color/list}">
+            <a th:href="@{/admin/category/list}">
               <i class="bi bi-circle"></i><span>Color List</span>
             </a>
           </li>
           <li>
-            <a th:href="@{/admin/color/create}">
+            <a th:href="@{/admin/category/create}">
               <i class="bi bi-circle"></i><span>Color Create</span>
             </a>
           </li>
@@ -506,7 +515,7 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Category Create</h1>
+      <h1>Color Create</h1>
     </div><!-- End Page Title -->
 
     <section class="section">
@@ -514,11 +523,11 @@
         <div class="col-lg-12">
           <div class="card">
             <div class="card-body">
-              <form method="post" th:action="@{/admin/category/create}">
+              <form method="post" th:action="@{/admin/color/create}">
                 <div class="mb-3 mt-3">
-                  <label class="form-label">Category Name</label>
+                  <label class="form-label">Color Name</label>
                   <input type="text" class="form-control" name="name">
-                  <div class="form-text">Category Name must be more than 3 letters!</div>
+                  <div class="form-text">Color Name must be more than 3 letters!</div>
                 </div>
                 <button type="submit" class="btn btn-primary">Create</button>
               </form>

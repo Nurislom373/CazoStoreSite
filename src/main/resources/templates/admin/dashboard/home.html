@@ -405,6 +405,58 @@
               </ul>
           </li><!-- End Category Nav -->
 
+          <li class="nav-item">
+              <a class="nav-link collapsed" data-bs-target="#size-nav" data-bs-toggle="collapse" href="#">
+                  <i class="bi bi-layout-text-window-reverse"></i><span>Sizes</span><i
+                      class="bi bi-chevron-down ms-auto"></i>
+              </a>
+              <ul id="size-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                  <li>
+                      <a th:href="@{/admin/size/list}">
+                          <i class="bi bi-circle"></i><span>Size List</span>
+                      </a>
+                  </li>
+                  <li>
+                      <a th:href="@{/admin/size/create}">
+                          <i class="bi bi-circle"></i><span>Size Create</span>
+                      </a>
+                  </li>
+              </ul>
+          </li><!-- End Size Nav -->
+
+          <li class="nav-item">
+              <a class="nav-link collapsed" data-bs-target="#color-nav" data-bs-toggle="collapse" href="#">
+                  <i class="bi bi-layout-text-window-reverse"></i><span>Colors</span><i
+                      class="bi bi-chevron-down ms-auto"></i>
+              </a>
+              <ul id="color-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                  <li>
+                      <a th:href="@{/admin/color/list}">
+                          <i class="bi bi-circle"></i><span>Color List</span>
+                      </a>
+                  </li>
+                  <li>
+                      <a th:href="@{/admin/color/create}">
+                          <i class="bi bi-circle"></i><span>Color Create</span>
+                      </a>
+                  </li>
+              </ul>
+          </li><!-- End Color Nav -->
+
+          <li class="nav-item">
+              <a class="nav-link collapsed" data-bs-target="#feedback-nav" data-bs-toggle="collapse" href="#">
+                  <i class="bi bi-layout-text-window-reverse"></i><span>Feedbacks</span><i
+                      class="bi bi-chevron-down ms-auto"></i>
+              </a>
+              <ul id="feedback-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                  <li>
+                      <a th:href="@{/admin/feedback/list}">
+                          <i class="bi bi-circle"></i><span>Feedback List</span>
+                      </a>
+                  </li>
+              </ul>
+          </li><!-- End Feedback Nav -->
+
           <li class="nav-heading">Pages</li>
 
           <li class="nav-item">
