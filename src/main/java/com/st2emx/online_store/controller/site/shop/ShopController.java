@@ -1,10 +1,10 @@
-package com.st2emx.online_store.controller.shop;
+package com.st2emx.online_store.controller.site.shop;
 
 import com.st2emx.online_store.config.session.SessionToken;
 import com.st2emx.online_store.controller.AbstractController;
 import com.st2emx.online_store.dto.shop.FilterDto;
-import com.st2emx.online_store.service.home.HomeService;
-import com.st2emx.online_store.service.product.ProductService;
+import com.st2emx.online_store.service.site.home.HomeService;
+import com.st2emx.online_store.service.site.product.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;

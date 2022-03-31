@@ -66,7 +66,7 @@
 
                 <!-- Logo desktop -->
                 <a href="#" class="logo">
-                    <img  th:src="@{/images/icons/logo-01.png}" alt="IMG-LOGO">
+                    <img th:src="@{/images/icons/logo-01.png}" alt="IMG-LOGO">
                 </a>
 
                 <!-- Menu desktop -->
@@ -193,7 +193,8 @@
 <!-- Product Detail -->
 <section class="sec-product-detail bg0 p-t-65 p-b-60">
     <div class="container">
-        <form class="w-full" th:action="@{/cart/create/{id}(id=${product.id})}" enctype="multipart/form-data" method="post">
+        <form class="w-full" th:action="@{/cart/create/{id}(id=${product.id})}" enctype="multipart/form-data"
+              method="post">
             <div class="row">
                 <div class="col-md-6 col-lg-7 p-b-30">
                     <div class="p-l-25 p-r-30 p-lr-0-lg">
@@ -346,7 +347,7 @@
                                     <!-- Review -->
                                     <div th:each="comment : ${product.comments}" class="flex-w flex-t p-b-68">
                                         <div class="wrap-pic-s size-109 bor0 of-hidden m-r-18 m-t-6">
-                                            <img th:src="@{/images/avatar-01.jpg}" alt="AVATAR">
+                                            <img th:src="@{/images/{path}(path=${comment.image_path})}" alt="AVATAR">
                                         </div>
 
                                         <div class="size-207">
@@ -372,7 +373,7 @@
 														<i class="zmdi zmdi-star"></i>
 														<i class="zmdi zmdi-star"></i>
 													</span>
-													<span th:case="${'5'}" class="fs-18 cl11">
+                                                    <span th:case="${'5'}" class="fs-18 cl11">
 														<i class="zmdi zmdi-star"></i>
 														<i class="zmdi zmdi-star"></i>
 														<i class="zmdi zmdi-star"></i>
@@ -525,7 +526,8 @@
                     </div>
 
                     <div class="p-t-18">
-                        <button class="flex-c-m stext-101 cl0 size-103 bg1 bor1 hov-btn2 p-lr-15 trans-04" th:text="#{subscribe}">
+                        <button class="flex-c-m stext-101 cl0 size-103 bg1 bor1 hov-btn2 p-lr-15 trans-04"
+                                th:text="#{subscribe}">
                         </button>
                     </div>
                 </form>

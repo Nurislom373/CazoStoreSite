@@ -1,9 +1,10 @@
-package com.st2emx.online_store.controller.auth;
+package com.st2emx.online_store.controller.site.auth;
 
 import com.st2emx.online_store.controller.AbstractController;
 import com.st2emx.online_store.dto.auth.LoginDto;
 import com.st2emx.online_store.dto.auth.RegisterDto;
-import com.st2emx.online_store.service.auth.AuthService;
+import com.st2emx.online_store.dto.token.TokenDto;
+import com.st2emx.online_store.service.site.auth.AuthService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+
+import static com.st2emx.online_store.utils.BaseUtils.createCookie;
 
 @Controller
 @RequestMapping("/auth/*")
@@ -32,13 +35,9 @@ public class AuthController extends AbstractController<AuthService> {
 
     @RequestMapping(value = "login", method = RequestMethod.POST)
     public String login(@ModelAttribute LoginDto loginDto, HttpServletResponse response) {
-        Long userId = service.login(loginDto).getUserId();
-        Cookie cookie = new Cookie("userId", String.valueOf(userId));
-        cookie.setMaxAge(7 * 24 * 60 * 60);
-        cookie.setSecure(true);
-        cookie.setHttpOnly(true);
-        cookie.setPath("/");
-        response.addCookie(cookie);
+        TokenDto login = service.login(loginDto);
+        response.addCookie(createCookie("userId", String.valueOf(login.getUserId())));
+        response.addCookie(createCookie("token", login.getAccessToken()));
         return "redirect:/auth";
     }
 

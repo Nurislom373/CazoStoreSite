@@ -1,20 +1,17 @@
-package com.st2emx.online_store.controller.product;
+package com.st2emx.online_store.controller.site.product;
 
 import com.st2emx.online_store.config.session.SessionToken;
 import com.st2emx.online_store.controller.AbstractController;
 import com.st2emx.online_store.dto.flash.FlashDto;
 import com.st2emx.online_store.dto.product.ProductCommentCreateDto;
-import com.st2emx.online_store.service.home.HomeService;
-import com.st2emx.online_store.service.product.ProductService;
+import com.st2emx.online_store.service.site.home.HomeService;
+import com.st2emx.online_store.service.site.product.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -92,7 +89,7 @@ public class ProductController extends AbstractController<ProductService> {
             return modelAndView;
         }
         service.productCommentCreate(id, productCommentCreateDto);
-        modelAndView.setViewName("/product/" + id);
+        modelAndView.setViewName("redirect:/product/" + id);
         return modelAndView;
     }
 
