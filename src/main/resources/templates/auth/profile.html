@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Users Profile</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link th:href="@{/images/img/favicon.png}" rel="icon">
+    <link th:href="@{/images/img/apple-touch-icon.png}" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+          rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- Vendor CSS Files -->
+    <link th:href="@{/vendor/bootstrap-icons/bootstrap-icons.css}" rel="stylesheet">
+    <link th:href="@{/vendor/boxicons/css/boxicons.min.css}" rel="stylesheet">
+    <link th:href="@{/vendor/remixicon/remixicon.css}" rel="stylesheet">
+    <link th:href="@{/vendor/simple-datatables/style.css}" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link th:href="@{/css/admin.css}" rel="stylesheet">
+
+
+</head>
+
+<body>
+<main style="padding: 20px 30px; transition: all 0.3s;">
+
+    <div class="pagetitle">
+        <h1>Profile</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a th:href="@{/auth}">Home</a></li>
+                <li class="breadcrumb-item active">Profile</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section profile">
+        <div class="row">
+            <div class="col-xl-4">
+
+                <div class="card">
+                    <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+
+                        <img th:src="@{/images/{path}(path=${user.image_path})}"
+                             alt="Profile" class="">
+
+                        <h2 th:text="${user.firstName}+' '+${user.lastName}">Kevin Anderson</h2>
+                        <h3 th:text="${user.username}">Web Designer</h3>
+                        <div class="social-links mt-2">
+                            <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+                            <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+                            <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+                            <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-xl-8">
+
+                <div class="card">
+                    <div class="card-body pt-3">
+                        <!-- Bordered Tabs -->
+                        <ul class="nav nav-tabs nav-tabs-bordered">
+
+                            <li class="nav-item">
+                                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">
+                                    Overview
+                                </button>
+                            </li>
+
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit
+                                    Profile
+                                </button>
+                            </li>
+
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings">
+                                    Settings
+                                </button>
+                            </li>
+
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">
+                                    Change Password
+                                </button>
+                            </li>
+
+                        </ul>
+                        <div class="tab-content pt-2">
+
+                            <div class="tab-pane fade show active profile-overview" id="profile-overview">
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label ">First Name</div>
+                                    <div class="col-lg-9 col-md-8" th:text="${user.firstName}"></div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Last Name</div>
+                                    <div class="col-lg-9 col-md-8" th:text="${user.lastName}"></div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Username</div>
+                                    <div class="col-lg-9 col-md-8" th:text="${user.username}"></div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Email</div>
+                                    <div class="col-lg-9 col-md-8" th:text="${user.email}"></div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Phone</div>
+                                    <div class="col-lg-9 col-md-8" th:text="${user.phone}"></div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Price type</div>
+                                    <div class="col-lg-9 col-md-8" th:text="${user.price_type}"></div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Language</div>
+                                    <div class="col-lg-9 col-md-8" th:text="${user.language_code}"></div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        <img style="height: 150px" th:src="@{/images/{path}(path=${user.image_path})}"
+                                             alt="Profile">
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+
+                                <!-- Profile Edit Form -->
+                                <form method="post" enctype="multipart/form-data"
+                                      th:action="@{/auth/profile/{id}(id=${userId})}">
+                                <div class="row mb-3">
+                                        <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile
+                                            Image</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <img id="profileImage" style="height: 150px" th:value="${user.image_path}"
+                                                 th:src="@{/images/{path}(path=${user.image_path})}"
+                                                 alt="Profile">
+                                            <div class="pt-2">
+                                                <a href="#" class="btn btn-primary btn-sm"
+                                                   title="Upload new profile image"><i class="bi bi-upload"></i></a>
+                                                <a href="#" class="btn btn-danger btn-sm"
+                                                   title="Remove my profile image"><i class="bi bi-trash"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="firstName" class="col-md-4 col-lg-3 col-form-label">First
+                                            Name</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="firstName" type="text" class="form-control" id="firstName"
+                                                   th:value="${user.firstName}">
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="lastName" class="col-md-4 col-lg-3 col-form-label">Last
+                                            Name</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="lastName" type="text" class="form-control" id="lastName"
+                                                   th:value="${user.lastName}">
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row mb-3">
+                                        <label for="username" class="col-md-4 col-lg-3 col-form-label">Username</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="username" type="text" class="form-control" id="username"
+                                                   th:value="${user.username}">
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="email" type="email" class="form-control" id="Email"
+                                                   th:value="${user.email}">
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="phone" type="text" class="form-control" id="Phone"
+                                                   th:value="${user.phone}">
+                                        </div>
+                                    </div>
+
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                                    </div>
+                                </form><!-- End Profile Edit Form -->
+
+                            </div>
+
+                            <div class="tab-pane fade pt-3" id="profile-settings">
+
+                                <!-- Settings Form -->
+
+                                <form method="post" th:action="@{/auth/profileSettings/{id}(id=${userId})}">
+                                    <div class="row">
+                                        <div class="mb-3">
+                                            <label class="form-label style-label">Language</label>
+                                            <select class="form-select" name="language_code"
+                                                    aria-label="Default select example">
+                                                <div th:switch="${user.language_code}">
+                                                    <div th:case="'RU'">
+                                                        <option value="RU" selected>Russia</option>
+                                                        <option value="EN">English</option>
+                                                        <option value="UZ">Uzbek</option>
+                                                    </div>
+                                                    <div th:case="'EN'">
+                                                        <option value="EN" selected>English</option>
+                                                        <option value="RU">Russia</option>
+                                                        <option value="UZ">Uzbek</option>
+                                                    </div>
+                                                    <div th:case="'UZ'">
+                                                        <option value="UZ" selected>Uzbek</option>
+                                                        <option value="RU">Russia</option>
+                                                        <option value="EN">English</option>
+                                                    </div>
+                                                </div>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="mb-3">
+                                            <label class="form-label style-label">Price Type</label>
+                                            <select class="form-select" name="price_type"
+                                                    aria-label="Default select example">
+                                                <div th:switch="${user.price_type}">
+                                                    <div th:case="'USD'">
+                                                        <option value="USD" selected>AQSH dollari</option>
+                                                        <option value="RUB">Rossiya rubli</option>
+                                                        <option value="UZS">O'zbek so'mi</option>
+                                                    </div>
+                                                    <div th:case="'RUB'">
+                                                        <option value="RUB" selected>Rossiya rubli</option>
+                                                        <option value="USD">AQSH dollari</option>
+                                                        <option value="UZS">O'zbek so'mi</option>
+                                                    </div>
+                                                    <div th:case="'UZS'">
+                                                        <option value="UZS" selected>O'zbek so'mi</option>
+                                                        <option value="USD">AQSH dollari</option>
+                                                        <option value="RUB">Rossiya rubli</option>
+                                                    </div>
+                                                </div>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                                    </div>
+
+                                </form><!-- End settings Form -->
+
+                            </div>
+
+                            <div class="tab-pane fade pt-3" id="profile-change-password">
+                                <!-- Change Password Form -->
+                                <form method="post" th:action="@{/auth/changePassword/{id}(id=${userId})}">
+                                <div class="row mb-3">
+                                        <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current
+                                            Password</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="password" type="password" class="form-control"
+                                                   id="currentPassword">
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New
+                                            Password</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="newPassword" type="password" class="form-control"
+                                                   id="newPassword">
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New
+                                            Password</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="renewPassword" type="password" class="form-control"
+                                                   id="renewPassword">
+                                        </div>
+                                    </div>
+
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary">Change Password</button>
+                                    </div>
+                                </form><!-- End Change Password Form -->
+
+                            </div>
+
+                        </div><!-- End Bordered Tabs -->
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+</main><!-- End #main -->
+
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+        class="bi bi-arrow-up-short"></i></a>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+<!-- Vendor JS Files -->
+<script th:src="@{/vendor/simple-datatables/simple-datatables.js}"></script>
+<script th:src="@{/vendor/tinymce/tinymce.min.js}"></script>
+
+<!-- Template Main JS File -->
+<script th:src="@{/js/admin.js}"></script>
+
+</body>
+
+</html>

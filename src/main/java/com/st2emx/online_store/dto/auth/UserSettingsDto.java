@@ -5,17 +5,18 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Author : Qozoqboyev Ixtiyor
+ * Time : 31.03.2022 21:10
+ * Project : online_store
+ */
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDto {
-    private String username;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String phone;
+public class UserSettingsDto {
+    private Long id;
     private String language_code;
-    private String image_path;
     private String price_type;
 }
+

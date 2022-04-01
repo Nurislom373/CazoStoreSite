@@ -3,14 +3,14 @@ package com.st2emx.online_store.service.site.auth;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.st2emx.online_store.config.session.SessionToken;
-import com.st2emx.online_store.dto.auth.LoginDto;
-import com.st2emx.online_store.dto.auth.RegisterDto;
+import com.st2emx.online_store.dto.auth.*;
 import com.st2emx.online_store.dto.file.FileDto;
 import com.st2emx.online_store.dto.token.TokenDto;
 import com.st2emx.online_store.service.BaseService;
 import lombok.SneakyThrows;
 import org.json.JSONObject;
 import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
@@ -90,6 +90,75 @@ public class AuthService implements BaseService {
         jsonObject.put("password", loginDto.getPassword());
         ResponseEntity<String> response = sendUrl("http://localhost:8080/api/v1/auth/token", HttpMethod.POST, MediaType.APPLICATION_JSON, jsonObject);
         return parseTo(response.getBody(), TokenDto.class);
+    }
+
+    public UserDto getUserDetails(Long userId) {
+        String url = "http://localhost:8080/api/v1/auth/"+userId;
+        RestTemplate template = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json");
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+        ResponseEntity<String> response = template.exchange(url, HttpMethod.GET, entity, new ParameterizedTypeReference<>() {
+        });
+        Gson gson = new Gson();
+        Type type = new TypeToken<UserDto>() {
+        }.getType();
+        UserDto userDto = gson.fromJson(response.getBody(), type);
+        return userDto;
+    }
+
+    public boolean updateProfile(Integer id, UserUpdateDto userUpdateDto) throws JSONException {
+        String url = "http://localhost:8080/api/v1/auth/update";
+        RestTemplate template = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json");
+        org.springframework.boot.configurationprocessor.json.JSONObject jsonObject = new org.springframework.boot.configurationprocessor.json.JSONObject();
+        jsonObject.put("id", id);
+        jsonObject.put("username", userUpdateDto.getUsername());
+        jsonObject.put("firstName", userUpdateDto.getFirstName());
+        jsonObject.put("lastName", userUpdateDto.getLastName());
+        jsonObject.put("email", userUpdateDto.getEmail());
+        jsonObject.put("phone", userUpdateDto.getPhone());
+        FileDto fileDto;
+        if (userUpdateDto.getImage_path() != null) {
+            fileDto = imageProcessing(userUpdateDto.getImage_path());
+            jsonObject.put("image_path", fileDto.getPath());
+        }
+        HttpEntity<String> entity = new HttpEntity<>(jsonObject.toString(), headers);
+        ResponseEntity<String> response = template.exchange(url, HttpMethod.PUT, entity, new ParameterizedTypeReference<>() {
+        });
+        return response.getStatusCode().is2xxSuccessful();
+    }
+
+    public boolean updateUserSettings(Integer id, UserSettingsDto userSettingsDto) throws JSONException {
+        String url = "http://localhost:8080/api/v1/auth/updateSettings";
+        RestTemplate template = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json");
+        org.springframework.boot.configurationprocessor.json.JSONObject jsonObject = new org.springframework.boot.configurationprocessor.json.JSONObject();
+        jsonObject.put("id", id);
+        jsonObject.put("language_code", userSettingsDto.getLanguage_code());
+        jsonObject.put("price_type", userSettingsDto.getPrice_type());
+        HttpEntity<String> entity = new HttpEntity<>(jsonObject.toString(), headers);
+        ResponseEntity<String> response = template.exchange(url, HttpMethod.PUT, entity, new ParameterizedTypeReference<>() {
+        });
+        return response.getStatusCode().is2xxSuccessful();
+    }
+
+    public boolean changePassword(Integer id, ChangePasswordDto changePasswordDto) throws JSONException {
+        String url = "http://localhost:8080/api/v1/auth/changePassword";
+        RestTemplate template = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json");
+        org.springframework.boot.configurationprocessor.json.JSONObject jsonObject = new org.springframework.boot.configurationprocessor.json.JSONObject();
+        jsonObject.put("id", id);
+        jsonObject.put("password", changePasswordDto.getPassword());
+        jsonObject.put("newPassword", changePasswordDto.getNewPassword());
+        jsonObject.put("renewPassword", changePasswordDto.getRenewPassword());
+        HttpEntity<String> entity = new HttpEntity<>(jsonObject.toString(), headers);
+        ResponseEntity<String> response = template.exchange(url, HttpMethod.PUT, entity, new ParameterizedTypeReference<>() {
+        });
+        return response.getStatusCode().is2xxSuccessful();
     }
 
 }

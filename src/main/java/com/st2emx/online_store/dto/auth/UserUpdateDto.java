@@ -4,18 +4,23 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
+/**
+ * Author : Qozoqboyev Ixtiyor
+ * Time : 28.03.2022 10:20
+ * Project : CazoStoreSite-master
+ */
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDto {
+public class UserUpdateDto {
+    private Long id;
     private String username;
     private String firstName;
     private String lastName;
     private String email;
     private String phone;
-    private String language_code;
-    private String image_path;
-    private String price_type;
+    private MultipartFile image_path;
 }
