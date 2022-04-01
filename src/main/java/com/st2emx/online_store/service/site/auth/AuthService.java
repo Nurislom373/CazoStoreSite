@@ -7,6 +7,7 @@ import com.st2emx.online_store.dto.auth.*;
 import com.st2emx.online_store.dto.file.FileDto;
 import com.st2emx.online_store.dto.token.TokenDto;
 import com.st2emx.online_store.service.BaseService;
+import com.st2emx.online_store.utils.BaseUtils;
 import lombok.SneakyThrows;
 import org.json.JSONObject;
 import org.springframework.boot.configurationprocessor.json.JSONException;
@@ -18,6 +19,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.lang.reflect.Type;
 
 import static com.st2emx.online_store.utils.BaseUtils.*;
@@ -27,7 +29,7 @@ public class AuthService implements BaseService {
 
     @SneakyThrows
     public Boolean register(RegisterDto registerDto) {
-        FileDto fileDto = imageProcessing(registerDto.getFile());
+        FileDto fileDto = sendFileUpload("http://localhost:8080/api/v1/file/user/upload", registerDto.getFile());
         return registerProcessing(registerDto, fileDto.getPath());
     }
 
@@ -51,19 +53,6 @@ public class AuthService implements BaseService {
         return tokenDto;
     }
 
-    @SneakyThrows
-    public FileDto imageProcessing(MultipartFile multipartFile) {
-        String url = "http://localhost:8080/api/v1/file/upload";
-        RestTemplate template = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
-        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
-        body.set("file", multipartFile.getInputStream());
-        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
-        RestTemplate restTemplate = new RestTemplate();
-        return getFileDto(url, requestEntity, restTemplate);
-    }
-
     private FileDto getFileDto(String url, HttpEntity<MultiValueMap<String, Object>> requestEntity, RestTemplate restTemplate) {
         ResponseEntity<String> response = restTemplate.postForEntity(url, requestEntity, String.class);
         Gson gson = new Gson();
@@ -71,17 +60,6 @@ public class AuthService implements BaseService {
         }.getType();
         FileDto fileDto = gson.fromJson(response.getBody(), type);
         return fileDto;
-    }
-
-    public FileDto imageUpload(MultipartFile file) {
-        String url = "http://localhost:8080/api/v1/file/upload";
-        RestTemplate template = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
-        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
-        body.add("file", file);
-        HttpEntity<MultiValueMap<String, Object>> entity = new HttpEntity<>(body, headers);
-        return getFileDto(url, entity, template);
     }
 
     public TokenDto loginProcessing(LoginDto loginDto) throws JSONException {
@@ -107,6 +85,7 @@ public class AuthService implements BaseService {
         return userDto;
     }
 
+    @SneakyThrows
     public boolean updateProfile(Integer id, UserUpdateDto userUpdateDto) throws JSONException {
         String url = "http://localhost:8080/api/v1/auth/update";
         RestTemplate template = new RestTemplate();
@@ -119,9 +98,8 @@ public class AuthService implements BaseService {
         jsonObject.put("lastName", userUpdateDto.getLastName());
         jsonObject.put("email", userUpdateDto.getEmail());
         jsonObject.put("phone", userUpdateDto.getPhone());
-        FileDto fileDto;
         if (userUpdateDto.getImage_path() != null) {
-            fileDto = imageProcessing(userUpdateDto.getImage_path());
+            FileDto fileDto = sendFileUpload("http://localhost:8080/api/v1/file/user/upload", userUpdateDto.getImage_path());
             jsonObject.put("image_path", fileDto.getPath());
         }
         HttpEntity<String> entity = new HttpEntity<>(jsonObject.toString(), headers);
