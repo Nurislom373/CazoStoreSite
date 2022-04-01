@@ -7,19 +7,14 @@ import com.st2emx.online_store.dto.auth.*;
 import com.st2emx.online_store.dto.file.FileDto;
 import com.st2emx.online_store.dto.token.TokenDto;
 import com.st2emx.online_store.service.BaseService;
-import com.st2emx.online_store.utils.BaseUtils;
 import lombok.SneakyThrows;
 import org.json.JSONObject;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
-import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
 import java.lang.reflect.Type;
 
 import static com.st2emx.online_store.utils.BaseUtils.*;
