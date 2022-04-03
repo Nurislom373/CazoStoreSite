@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.st2emx.online_store.config.session.SessionToken;
 import com.st2emx.online_store.dto.file.FileDto;
 import com.st2emx.online_store.dto.product.ProductDto;
+import lombok.SneakyThrows;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpUriRequest;
@@ -26,7 +27,8 @@ import java.util.List;
 
 public class BaseUtils {
 
-    public static FileDto sendFileUpload(String url, MultipartFile file) throws IOException {
+    @SneakyThrows
+    public static FileDto sendFileUpload(String url, MultipartFile file) {
         CloseableHttpClient httpClient = HttpClients.createDefault();
         org.apache.http.HttpEntity data = MultipartEntityBuilder.create().setMode(HttpMultipartMode.BROWSER_COMPATIBLE)
                 .addBinaryBody("file", file.getInputStream(), ContentType.DEFAULT_BINARY, file.getOriginalFilename()).build();

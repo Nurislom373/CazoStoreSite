@@ -55,12 +55,8 @@ public class HomeController extends AbstractController<HomeService> {
 
     @RequestMapping(value = "/file", method = RequestMethod.POST)
     public String file(@RequestParam("file") MultipartFile file) {
-        try {
-            FileDto fileDto = BaseUtils.sendFileUpload("http://localhost:8080/api/v1/file/product/upload", file);
-            System.out.println("fileDto = " + fileDto);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        FileDto fileDto = BaseUtils.sendFileUpload("http://localhost:8080/api/v1/file/product/upload", file);
+        System.out.println("fileDto = " + fileDto);
         return "product/input";
     }
 }
