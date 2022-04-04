@@ -1,9 +1,7 @@
 package com.st2emx.online_store.utils;
 
 import com.google.gson.Gson;
-import com.st2emx.online_store.config.session.SessionToken;
 import com.st2emx.online_store.dto.file.FileDto;
-import com.st2emx.online_store.dto.product.ProductDto;
 import lombok.SneakyThrows;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.ResponseHandler;
@@ -22,7 +20,6 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.Cookie;
-import java.io.IOException;
 import java.util.List;
 
 public class BaseUtils {
