@@ -52,7 +52,7 @@
                     <a href="#" class="flex-c-m trans-04 p-lr-25" th:text="#{help_FAQS}">
                         Help & FAQs
                     </a>
-                    <a href="#" class="flex-c-m trans-04 p-lr-25" th:text="${user.username}"></a>
+                    <a th:href="@{/auth/profile}" class="flex-c-m trans-04 p-lr-25" th:text="${user.username}"></a>
                     <a href="#" class="flex-c-m trans-04 p-lr-25" th:text="${user.language_code}"></a>
                     <a href="#" class="flex-c-m trans-04 p-lr-25">
                         USD

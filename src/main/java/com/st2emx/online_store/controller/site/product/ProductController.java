@@ -7,10 +7,7 @@ import com.st2emx.online_store.dto.product.ProductCommentCreateDto;
 import com.st2emx.online_store.service.site.home.HomeService;
 import com.st2emx.online_store.service.site.product.ProductService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.Cookie;
@@ -31,16 +28,15 @@ public class ProductController extends AbstractController<ProductService> {
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
-    public ModelAndView getProduct(@PathVariable Long id, HttpServletRequest request) {
+    public ModelAndView getProduct(@PathVariable Long id, HttpServletRequest request, @CookieValue("userId") Long userId) {
         ModelAndView modelAndView = new ModelAndView();
-        if (Objects.isNull(SessionToken.getSession())) {
+        if (Objects.isNull(userId)) {
             modelAndView.setViewName("product/product-detail");
             modelAndView.addObject("product", service.getProductFull(id));
         } else {
             modelAndView.setViewName("product/auth_product-detail");
-            Optional<String> any = Arrays.stream(request.getCookies()).filter(cookie -> "userId".equals(cookie.getName())).map(Cookie::getValue).findAny();
             modelAndView.addObject("product", service.getProductFull(id));
-            modelAndView.addObject("user", homeService.getUserById(Long.parseLong(any.get())));
+            modelAndView.addObject("user", homeService.getUserById(userId));
             modelAndView.addObject("likeCount", homeService.getLike());
         }
         modelAndView.addObject("error", new FlashDto());

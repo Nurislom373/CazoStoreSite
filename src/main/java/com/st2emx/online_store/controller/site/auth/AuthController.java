@@ -27,12 +27,12 @@ public class AuthController extends AbstractController<AuthService> {
 
     @RequestMapping(value = "login", method = RequestMethod.GET)
     public String loginPage() {
-        return "auth/login";
+        return "auth/new_login";
     }
 
     @RequestMapping(value = "register", method = RequestMethod.GET)
     public String registerPage() {
-        return "auth/register";
+        return "auth/new_register";
     }
 
     @RequestMapping(value = "login", method = RequestMethod.POST)
