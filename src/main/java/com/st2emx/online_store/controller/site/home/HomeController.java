@@ -32,16 +32,7 @@ public class HomeController extends AbstractController<HomeService> {
 
     @RequestMapping(value = "/")
     public String indexPage(HttpServletRequest request) {
-        Cookie[] cookies = request.getCookies();
-        if (Objects.isNull(cookies)) return "redirect:/no_auth";
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("userId")) {
-                if (Objects.nonNull(cookie.getValue())) {
-                    return "redirect:/auth";
-                }
-            }
-        }
-        return "redirect:/no_auth";
+        return service.indexCheck(request.getCookies());
     }
 
     @RequestMapping(value = "/no_auth")

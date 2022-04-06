@@ -13,7 +13,10 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import javax.servlet.http.Cookie;
 import java.util.List;
+import java.util.Objects;
 
 import static com.st2emx.online_store.utils.BaseUtils.*;
 
@@ -69,5 +72,17 @@ public class HomeService implements BaseService {
     public Integer getLike(Long userId) {
         List<ProductOnlyDto> list = getAllProductLike(userId);
         return list.size();
+    }
+
+    public String indexCheck(Cookie[] cookies) {
+        if (Objects.isNull(cookies)) return "redirect:/no_auth";
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals("userId")) {
+                if (Objects.nonNull(cookie.getValue())) {
+                    return "redirect:/auth";
+                }
+            }
+        }
+        return "redirect:/no_auth";
     }
 }

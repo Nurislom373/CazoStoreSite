@@ -78,11 +78,11 @@ public class AuthController extends AbstractController<AuthService> {
     public String logout(HttpServletRequest request, HttpServletResponse response) {
         Cookie[] cookies = request.getCookies();
         for (Cookie value : cookies) {
-            if (value.getName().equals("userId")) {
+            if (value.getName().equals("userId") || value.getName().equals("token")) {
                 value.setValue(null);
                 value.setMaxAge(0);
+                value.setPath("/");
                 response.addCookie(value);
-                return "redirect:/";
             }
         }
         return "redirect:/";

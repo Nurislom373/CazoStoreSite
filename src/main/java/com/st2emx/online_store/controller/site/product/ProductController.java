@@ -52,8 +52,12 @@ public class ProductController extends AbstractController<ProductService> {
     }
 
     @RequestMapping(value = "/like/{id}")
-    public String productLike(@PathVariable Long id, @CookieValue("userId") Long userId) {
-        service.productLike(id, userId);
+    public String productLike(HttpServletRequest request, @PathVariable Long id) {
+        Cookie[] cookies = request.getCookies();
+        if (BaseUtils.checkCookies(cookies)) {
+            Long userId = Long.parseLong(BaseUtils.getCookie(cookies, "userId"));
+            service.productLike(id, userId);
+        }
         return "redirect:/";
     }
 
