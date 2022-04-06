@@ -40,4 +40,9 @@ public class AdminProductService implements BaseService {
         jsonObject.put("image_path", BaseUtils.sendFileUpload(urlFile, createDto.getImage()).getPath());
         BaseUtils.sendUrl(url, HttpMethod.POST, MediaType.APPLICATION_JSON, jsonObject);
     }
+
+    public void deleteImage(Long id) {
+        String url = "http://localhost:8080/api/v1/product/image/" + id;
+        BaseUtils.sendUrl(url, HttpMethod.DELETE, MediaType.APPLICATION_JSON);
+    }
 }

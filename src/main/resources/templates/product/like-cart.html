@@ -46,7 +46,7 @@
                     <a href="#" class="flex-c-m trans-04 p-lr-25" th:text="#{help_FAQS}">
                         Help & FAQs
                     </a>
-                    <a href="#" class="flex-c-m trans-04 p-lr-25" th:text="${user.username}"></a>
+                    <a th:href="@{/auth/profile}" class="flex-c-m trans-04 p-lr-25" th:text="${user.username}"></a>
                     <a href="#" class="flex-c-m trans-04 p-lr-25" th:text="${user.language_code}"></a>
                     <a href="#" class="flex-c-m trans-04 p-lr-25">
                         USD
@@ -60,7 +60,7 @@
 
                 <!-- Logo desktop -->
                 <a href="#" class="logo">
-                    <img th:src="@{/images/icons/logo-01.png}" alt="IMG-LOGO">
+                    <img  th:src="@{/images/icons/logo-01.png}" alt="IMG-LOGO">
                 </a>
 
                 <!-- Menu desktop -->
@@ -90,10 +90,10 @@
                         <i class="zmdi zmdi-search"></i>
                     </div>
 
-                    <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart"
-                         data-notify="2">
+                    <a th:href="@{/cart/shoping_cart}" class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart"
+                       th:data-notify="${CartCount}">
                         <i class="zmdi zmdi-shopping-cart"></i>
-                    </div>
+                    </a>
 
                     <a th:href="@{/product/like}"
                        class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti"
@@ -104,7 +104,6 @@
             </nav>
         </div>
     </div>
-
     <!-- Header Mobile -->
     <div class="wrap-header-mobile">
         <!-- Logo moblie -->
@@ -137,7 +136,6 @@
 				</span>
         </div>
     </div>
-
     <!-- Menu Mobile -->
     <div class="menu-mobile">
         <ul class="topbar-mobile">

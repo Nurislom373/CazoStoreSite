@@ -9,13 +9,8 @@ import com.st2emx.online_store.dto.product.ProductFullDto;
 import com.st2emx.online_store.dto.shop.FilterDto;
 import com.st2emx.online_store.service.BaseService;
 import org.json.JSONObject;
-import org.springframework.boot.configurationprocessor.json.JSONException;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-
-import java.lang.reflect.Type;
 import java.util.List;
 
 import static com.st2emx.online_store.utils.BaseUtils.parseTo;
@@ -30,23 +25,23 @@ public class ProductService implements BaseService {
         return parseTo(response.getBody(), ProductFullDto.class);
     }
 
-    public Boolean productLike(Long id) {
+    public Boolean productLike(Long id, Long userId) {
         String url = "http://localhost:8080/api/v1/product/like/create";
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("userId", SessionToken.getSession().getUserId());
+        jsonObject.put("userId", userId);
         jsonObject.put("productId", id);
         return sendUrl(url, HttpMethod.POST, MediaType.APPLICATION_JSON, jsonObject).getStatusCode().is2xxSuccessful();
     }
 
-    public Boolean productLikeDelete(Long id) {
-        String url = "http://localhost:8080/api/v1/product/like/" + id + "/" + SessionToken.getSession().getUserId();
+    public Boolean productLikeDelete(Long id, Long userId) {
+        String url = "http://localhost:8080/api/v1/product/like/" + id + "/" + userId;
         return sendUrl(url, HttpMethod.DELETE, MediaType.APPLICATION_JSON).getStatusCode().is2xxSuccessful();
     }
 
-    public Boolean productCommentCreate(Long id, ProductCommentCreateDto productCommentCreateDto) {
+    public Boolean productCommentCreate(Long id, ProductCommentCreateDto productCommentCreateDto, Long userId) {
         String url = "http://localhost:8080/api/v1/product/comment/create";
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("userId", SessionToken.getSession().getUserId());
+        jsonObject.put("userId", userId);
         jsonObject.put("productId", id);
         jsonObject.put("message", productCommentCreateDto.getReview());
         jsonObject.put("rating", productCommentCreateDto.getRating());

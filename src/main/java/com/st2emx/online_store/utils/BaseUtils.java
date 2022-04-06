@@ -20,9 +20,20 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.Cookie;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class BaseUtils {
+
+    public static String getCookie(Cookie[] cookies, String name) {
+        return Arrays.stream(cookies).filter(cookie -> cookie.getName().equalsIgnoreCase(name)).findFirst().map(Cookie::getValue).orElse(null);
+    }
+
+    public static Boolean checkCookies(Cookie[] cookies) {
+        if (Objects.isNull(cookies)) return false;
+        return Arrays.stream(cookies).anyMatch(cookie -> cookie.getName().equals("userId") && Objects.nonNull(cookie.getValue()));
+    }
 
     @SneakyThrows
     public static FileDto sendFileUpload(String url, MultipartFile file) {
@@ -63,16 +74,13 @@ public class BaseUtils {
         return new Gson().fromJson(body, tClass);
     }
 
-    public static <T> List<T> parseToList(String body, List<T> tClass) {
-        return new Gson().fromJson(body, tClass.getClass());
-    }
-
     public static ResponseEntity<String> sendUrl(String url, HttpMethod httpMethod, MediaType mediaType) {
         RestTemplate template = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(mediaType);
         HttpEntity<String> entity = new HttpEntity<>(headers);
-        return template.exchange(url, httpMethod, entity, new ParameterizedTypeReference<>() {});
+        return template.exchange(url, httpMethod, entity, new ParameterizedTypeReference<>() {
+        });
     }
 
     public static ResponseEntity<String> sendUrl(String url, HttpMethod httpMethod, MediaType mediaType, String bearer) {
@@ -81,7 +89,8 @@ public class BaseUtils {
         headers.add("Authorization", "Bearer ".concat(bearer));
         headers.setContentType(mediaType);
         HttpEntity<String> entity = new HttpEntity<>(headers);
-        return template.exchange(url, httpMethod, entity, new ParameterizedTypeReference<>() {});
+        return template.exchange(url, httpMethod, entity, new ParameterizedTypeReference<>() {
+        });
     }
 
     public static ResponseEntity<String> sendUrl(String url, HttpMethod httpMethod, MediaType mediaType, JSONObject jsonObject) {
@@ -89,7 +98,8 @@ public class BaseUtils {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(mediaType);
         HttpEntity<String> entity = new HttpEntity<>(jsonObject.toString(), headers);
-        return template.exchange(url, httpMethod, entity, new ParameterizedTypeReference<>() {});
+        return template.exchange(url, httpMethod, entity, new ParameterizedTypeReference<>() {
+        });
     }
 
     public static ResponseEntity<String> sendUrl(String url, HttpMethod httpMethod, MediaType mediaType, JSONObject jsonObject, String bearer) {
@@ -98,6 +108,7 @@ public class BaseUtils {
         headers.add("Authorization", "Bearer ".concat(bearer));
         headers.setContentType(mediaType);
         HttpEntity<String> entity = new HttpEntity<>(jsonObject.toString(), headers);
-        return template.exchange(url, httpMethod, entity, new ParameterizedTypeReference<>() {});
+        return template.exchange(url, httpMethod, entity, new ParameterizedTypeReference<>() {
+        });
     }
 }

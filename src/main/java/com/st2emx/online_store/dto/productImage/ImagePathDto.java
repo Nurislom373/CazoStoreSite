@@ -10,5 +10,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ImagePathDto {
+    private Long id;
     private String image_path;
 }

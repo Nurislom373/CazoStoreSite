@@ -22,39 +22,43 @@ public class AuthCartController extends AbstractController<AuthCartService> {
     }
 
     @RequestMapping(value = "create/{id}", method = RequestMethod.POST)
-    public String create(@ModelAttribute CartCreateDto dto, @PathVariable Long id) {
-        service.create(dto,id);
+    public String create(@ModelAttribute CartCreateDto dto, @PathVariable Long id, @CookieValue("userId") Long userId, @CookieValue("token") String token) {
+        service.create(dto,id, token, userId);
         return "redirect:/product/" + id;
     }
 
     @RequestMapping(value = "shoping_cart",method = RequestMethod.GET)
-    public ModelAndView getAll(@CookieValue("userId") Long userId) {
+    public ModelAndView getAll(@CookieValue("userId") Long userId, @CookieValue("token") String token) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("carts",service.getCards());
-        modelAndView.addObject("CartCount", service.getCards().size());
+        modelAndView.addObject("carts",service.getCards(userId, token));
+        modelAndView.addObject("CartCount", service.getCards(userId, token).size());
         modelAndView.addObject("user", homeService.getUserById(userId));
-        modelAndView.addObject("likeCount", homeService.getLike());
-        modelAndView.addObject("sumCartPrice", service.sumCartPrice());
+        modelAndView.addObject("likeCount", homeService.getLike(userId));
+        modelAndView.addObject("sumCartPrice", service.sumCartPrice(userId, token));
         modelAndView.setViewName("product/shoping_cart");
         return modelAndView;
     }
 
     @RequestMapping(value = "shoping_cart_update")
-    public ModelAndView cartUpdate(){
+    public ModelAndView cartUpdate(@CookieValue("userId") Long userId, @CookieValue("token") String token){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject( "carts",service.getCards());
-        modelAndView.addObject("sumCartPrice", service.sumCartPrice());
+        modelAndView.addObject( "carts",service.getCards(userId, token));
+        modelAndView.addObject("sumCartPrice", service.sumCartPrice(userId, token));
+        modelAndView.addObject("CartCount", service.getCards(userId, token).size());
+        modelAndView.addObject("user", homeService.getUserById(userId));
+        modelAndView.addObject("likeCount", homeService.getLike(userId));
+        modelAndView.addObject("sumCartPrice", service.sumCartPrice(userId, token));
         modelAndView.setViewName("product/shoping_cart_update");
         return modelAndView;
     }
 
     @RequestMapping(value = "shopping_cart_update",method = RequestMethod.POST)
-    public ModelAndView shoppingCartUpdate(@ModelAttribute CartUpdateDto dto){
+    public ModelAndView shoppingCartUpdate(@ModelAttribute CartUpdateDto dto, @CookieValue("userId") Long userId, @CookieValue("token") String token){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject( "carts",service.getCards());
-        modelAndView.addObject("sumCartPrice", service.sumCartPrice());
-        modelAndView.addObject("count",service.updateCart(dto));
-        return cartUpdate();
+        modelAndView.addObject( "carts",service.getCards(userId, token));
+        modelAndView.addObject("sumCartPrice", service.sumCartPrice(userId, token));
+        modelAndView.addObject("count",service.updateCart(dto, token));
+        return cartUpdate(userId, token);
     }
 
 

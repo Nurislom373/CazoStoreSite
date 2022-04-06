@@ -54,4 +54,10 @@ public class AdminProductController extends AbstractController<AdminProductServi
         modelAndView.setViewName("admin/product/ProductDetail");
         return modelAndView;
     }
+
+    @RequestMapping(value = "/image/delete/{id}")
+    public String deleteImage(@PathVariable Long id) {
+        service.deleteImage(id);
+        return "redirect:/admin/home";
+    }
 }

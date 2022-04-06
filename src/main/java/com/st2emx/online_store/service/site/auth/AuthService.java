@@ -44,7 +44,6 @@ public class AuthService implements BaseService {
     @SneakyThrows
     public TokenDto login(LoginDto loginDto) {
         TokenDto tokenDto = loginProcessing(loginDto);
-        SessionToken.setSession(tokenDto);
         return tokenDto;
     }
 

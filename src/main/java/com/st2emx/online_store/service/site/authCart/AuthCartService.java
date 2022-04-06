@@ -22,14 +22,14 @@ import java.util.List;
 @Service
 public class AuthCartService implements BaseService {
 
-    public Boolean create(CartCreateDto dto, Long id) {
+    public Boolean create(CartCreateDto dto, Long id, String token, Long userid) {
         String url = "http://localhost:8080/api/v1/auth/cart/create";
         RestTemplate template = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-type", "application/json");
-        headers.add("Authorization", "Bearer ".concat(SessionToken.session.getAccessToken()));
+        headers.add("Authorization", "Bearer ".concat(token));
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("userId", SessionToken.getSession().getUserId());
+        jsonObject.put("userId", userid);
         jsonObject.put("productId", id);
         jsonObject.put("count", dto.getCount());
         jsonObject.put("accept", dto.getAccept());
@@ -39,12 +39,12 @@ public class AuthCartService implements BaseService {
         return response.getStatusCode().is2xxSuccessful();
     }
 
-    public List<CartDto> getCards() {
-        String url = "http://localhost:8080/api/v1/auth/cart/list/" + SessionToken.getSession().getUserId();
+    public List<CartDto> getCards(Long userId, String token) {
+        String url = "http://localhost:8080/api/v1/auth/cart/list/" + userId;
         RestTemplate template = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-type", "application/json");
-        headers.add("Authorization", "Bearer ".concat(SessionToken.getSession().getAccessToken()));
+        headers.add("Authorization", "Bearer ".concat(token));
         HttpEntity<Object> entity = new HttpEntity<>(headers);
         ResponseEntity<String> response = template.exchange(url, HttpMethod.GET, entity, new ParameterizedTypeReference<>() {
         });
@@ -56,12 +56,12 @@ public class AuthCartService implements BaseService {
         return cartDtos;
     }
 
-    public CartDto updateCart(CartUpdateDto dto){
+    public CartDto updateCart(CartUpdateDto dto, String token){
         String url = "http://localhost:8080/api/v1/auth/cart/update/"+dto.getId();
         RestTemplate template = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-type", "application/json");
-        headers.add("Authorization", "Bearer ".concat(SessionToken.getSession().getAccessToken()));
+        headers.add("Authorization", "Bearer ".concat(token));
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("count", dto.getCount());
         jsonObject.put("id", dto.getId());
@@ -75,12 +75,12 @@ public class AuthCartService implements BaseService {
         return gson.fromJson(response.getBody(), type);
     }
 
-    public String sumCartPrice() {
-        String url = "http://localhost:8080/api/v1/auth/cart/sumCartPrice/" + SessionToken.getSession().getUserId();
+    public String sumCartPrice(Long userId,String token) {
+        String url = "http://localhost:8080/api/v1/auth/cart/sumCartPrice/" + userId;
         RestTemplate template = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-type", "application/json");
-        headers.add("Authorization", "Bearer ".concat(SessionToken.getSession().getAccessToken()));
+        headers.add("Authorization", "Bearer ".concat(token));
         HttpEntity<Object> entity = new HttpEntity<>(headers);
         ResponseEntity<String> response = template.exchange(url, HttpMethod.GET, entity, new ParameterizedTypeReference<>() {
         });

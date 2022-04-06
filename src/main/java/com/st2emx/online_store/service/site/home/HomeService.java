@@ -2,39 +2,17 @@ package com.st2emx.online_store.service.site.home;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.st2emx.online_store.config.session.SessionToken;
 import com.st2emx.online_store.dto.auth.UserDto;
 import com.st2emx.online_store.dto.category.CategoryDto;
-import com.st2emx.online_store.dto.file.FileDto;
 import com.st2emx.online_store.dto.product.ProductDto;
 import com.st2emx.online_store.dto.product.ProductOnlyDto;
 import com.st2emx.online_store.entity.color.Color;
 import com.st2emx.online_store.service.BaseService;
-import org.apache.http.HttpEntity;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.http.client.methods.RequestBuilder;
-import org.apache.http.entity.ContentType;
-import org.apache.http.entity.mime.HttpMultipartMode;
-import org.apache.http.entity.mime.MultipartEntityBuilder;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.File;
-import java.io.IOException;
-import java.lang.management.MemoryUsage;
-import java.net.URI;
-import java.net.http.HttpClient;
 import java.util.List;
 
 import static com.st2emx.online_store.utils.BaseUtils.*;
@@ -75,8 +53,8 @@ public class HomeService implements BaseService {
         }.getType());
     }
 
-    public List<ProductOnlyDto> getAllProductLike() {
-        String url = "http://localhost:8080/api/v1/product/like/user/" + SessionToken.getSession().getUserId();
+    public List<ProductOnlyDto> getAllProductLike(Long userId) {
+        String url = "http://localhost:8080/api/v1/product/like/user/" + userId;
         ResponseEntity<String> response = sendUrl(url, HttpMethod.GET, MediaType.APPLICATION_JSON);
         return new Gson().fromJson(response.getBody(), new TypeToken<List<ProductOnlyDto>>() {
         }.getType());
@@ -88,8 +66,8 @@ public class HomeService implements BaseService {
         return parseTo(response.getBody(), UserDto.class);
     }
 
-    public Integer getLike() {
-        List<ProductOnlyDto> list = getAllProductLike();
+    public Integer getLike(Long userId) {
+        List<ProductOnlyDto> list = getAllProductLike(userId);
         return list.size();
     }
 }

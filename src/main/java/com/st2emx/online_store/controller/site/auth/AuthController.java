@@ -1,18 +1,16 @@
 package com.st2emx.online_store.controller.site.auth;
 
-import com.st2emx.online_store.config.session.SessionToken;
 import com.st2emx.online_store.controller.AbstractController;
 import com.st2emx.online_store.dto.auth.*;
 import com.st2emx.online_store.dto.token.TokenDto;
 import com.st2emx.online_store.service.site.auth.AuthService;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import static com.st2emx.online_store.utils.BaseUtils.createCookie;
@@ -50,12 +48,12 @@ public class AuthController extends AbstractController<AuthService> {
     }
 
     @RequestMapping(value = "profile", method = RequestMethod.GET)
-    public ModelAndView profilePage() {
+    public ModelAndView profilePage(@CookieValue("userId") Long userId) {
         ModelAndView modelAndView=new ModelAndView();
         modelAndView.setViewName("auth/profile");
-        UserDto userDto = service.getUserDetails(SessionToken.getSession().getUserId());
+        UserDto userDto = service.getUserDetails(userId);
         modelAndView.addObject("user",userDto);
-        modelAndView.addObject("userId",SessionToken.getSession().getUserId());
+        modelAndView.addObject("userId",userId);
         return modelAndView;
     }
     @RequestMapping(value = "profile/{id}", method = RequestMethod.POST)
@@ -74,5 +72,19 @@ public class AuthController extends AbstractController<AuthService> {
     public String profileChangePassword(@PathVariable Integer id, @ModelAttribute ChangePasswordDto changePasswordDto) throws JSONException {
         service.changePassword(id,changePasswordDto);
         return "redirect:/auth";
+    }
+
+    @RequestMapping(value = "logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
+        Cookie[] cookies = request.getCookies();
+        for (Cookie value : cookies) {
+            if (value.getName().equals("userId")) {
+                value.setValue(null);
+                value.setMaxAge(0);
+                response.addCookie(value);
+                return "redirect:/";
+            }
+        }
+        return "redirect:/";
     }
 }
